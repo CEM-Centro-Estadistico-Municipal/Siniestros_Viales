@@ -173,9 +173,12 @@ const C = {
 // ── Parseo CSV ────────────────────────────────────────────────
 function parseCSV(txt) {
   const lines = txt.trim().split(/\r?\n/);
-  if (lines.length < 2) return [];
-  const headers = splitRow(lines[0]).map(h => h.trim());
-  return lines.slice(1).map(l => {
+  if (lines.length < 3) return [];
+  // Fila 0 = títulos de sección (DATOS DEL SINIESTRO, VEHÍCULO N°1...) — se ignora
+  // Fila 1 = headers reales (Marca temporal, Hora del siniestro...)
+  // Fila 2+ = datos
+  const headers = splitRow(lines[1]).map(h => h.trim());
+  return lines.slice(2).map(l => {
     const vals = splitRow(l);
     const o = {};
     headers.forEach((h, i) => { o[h] = (vals[i] || '').trim(); });
