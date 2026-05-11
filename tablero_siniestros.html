@@ -8,16 +8,14 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-:root {
-  --azul-800:#0a3a68; --azul-700:#0e5a9e; --azul-500:#378add;
-  --azul-100:#d0e4f5; --azul-50:#e8f0f8;
-  --ocre-500:#b8863d; --ocre-100:#f0dfc0;
-  --papel:#f8f5ee; --papel2:#eee6d5;
-  --tinta:#171614; --neutro:#6b6760; --borde:#ddd8cc;
-  --verde:#2f7d32; --rojo:#a8322c; --amarillo:#c9971a;
+:root{
+  --azul-800:#0a3a68;--azul-700:#0e5a9e;--azul-50:#e8f0f8;
+  --ocre-500:#b8863d;--ocre-100:#f0dfc0;
+  --papel:#f8f5ee;--papel2:#eee6d5;--tinta:#171614;
+  --neutro:#6b6760;--borde:#ddd8cc;
+  --verde:#2f7d32;--rojo:#a8322c;--amarillo:#c9971a;
   --sans:'IBM Plex Sans',system-ui,sans-serif;
-  --mono:'IBM Plex Mono',monospace;
-  --r:8px;
+  --mono:'IBM Plex Mono',monospace;--r:8px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:var(--sans);background:var(--papel);color:var(--tinta);font-size:15px;line-height:1.5;}
@@ -26,20 +24,20 @@ body{font-family:var(--sans);background:var(--papel);color:var(--tinta);font-siz
 .hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent,transparent 22px,rgba(184,134,61,.07) 22px,rgba(184,134,61,.07) 23px);pointer-events:none;}
 .hdr-inner{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
 .hdr-badge{display:inline-block;background:var(--rojo);color:#fff;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:4px;margin-bottom:10px;}
-.hdr-title{font-size:22px;font-weight:500;color:#fff;line-height:1.2;}
+.hdr-title{font-size:22px;font-weight:500;color:#fff;}
 .hdr-sub{font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.55);margin-top:5px;}
-.hdr-periodo{font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.7);text-align:right;margin-top:4px;}
-.hdr-estado{position:relative;display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.6);margin-top:1rem;flex-wrap:wrap;}
+.hdr-periodo{font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.7);}
+.hdr-estado{position:relative;display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.6);margin-top:1rem;}
 .dot{width:7px;height:7px;border-radius:50%;background:#4caf50;flex-shrink:0;}
-.dot.cargando{background:var(--ocre-500);animation:pulso 1.2s infinite;}
-.dot.error{background:var(--rojo);}
-@keyframes pulso{0%,100%{opacity:1}50%{opacity:.3}}
+.dot.cargando{background:var(--ocre-500);animation:p 1.2s infinite;}
+.dot.err{background:var(--rojo);}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
 
 .filtros{background:#fff;border-bottom:1px solid var(--borde);padding:.75rem 2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
 .fil-lbl{font-family:var(--mono);font-size:11px;color:var(--neutro);text-transform:uppercase;letter-spacing:.06em;}
-.fil-select{font-family:var(--mono);font-size:12px;padding:5px 10px;border:1px solid var(--borde);border-radius:4px;background:var(--papel);color:var(--tinta);cursor:pointer;outline:none;}
-.fil-select:focus{border-color:var(--azul-700);}
-.fil-btn{font-family:var(--sans);font-size:12px;font-weight:500;padding:5px 14px;border-radius:4px;cursor:pointer;border:1px solid var(--azul-700);background:var(--azul-700);color:#fff;transition:background .15s;}
+.fil-sel{font-family:var(--mono);font-size:12px;padding:5px 10px;border:1px solid var(--borde);border-radius:4px;background:var(--papel);color:var(--tinta);cursor:pointer;outline:none;}
+.fil-sel:focus{border-color:var(--azul-700);}
+.fil-btn{font-family:var(--sans);font-size:12px;font-weight:500;padding:5px 14px;border-radius:4px;cursor:pointer;border:1px solid var(--azul-700);background:var(--azul-700);color:#fff;}
 .fil-btn:hover{background:var(--azul-800);}
 .fil-btn.sec{background:transparent;color:var(--azul-700);}
 .fil-btn.sec:hover{background:var(--azul-50);}
@@ -50,54 +48,54 @@ body{font-family:var(--sans);background:var(--papel);color:var(--tinta);font-siz
 .sec-titulo{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--neutro);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.875rem;padding-bottom:.5rem;border-bottom:1px solid var(--borde);}
 
 .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;}
-.metric-card{background:#fff;border:1px solid var(--borde);border-radius:var(--r);padding:.875rem 1rem;border-left-width:3px;}
-.metric-card.azul{border-left-color:var(--azul-700);}
-.metric-card.rojo{border-left-color:var(--rojo);}
-.metric-card.ocre{border-left-color:var(--ocre-500);}
-.metric-card.verde{border-left-color:var(--verde);}
-.metric-card.amar{border-left-color:var(--amarillo);}
+.mc{background:#fff;border:1px solid var(--borde);border-radius:var(--r);padding:.875rem 1rem;border-left-width:3px;}
+.mc.azul{border-left-color:var(--azul-700);}
+.mc.rojo{border-left-color:var(--rojo);}
+.mc.ocre{border-left-color:var(--ocre-500);}
+.mc.verde{border-left-color:var(--verde);}
+.mc.amar{border-left-color:var(--amarillo);}
 .m-lbl{font-family:var(--mono);font-size:10px;color:var(--neutro);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
 .m-val{font-family:var(--mono);font-size:28px;font-weight:500;line-height:1;color:var(--tinta);}
 .m-sub{font-size:11px;color:var(--neutro);margin-top:4px;}
 
 .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(max-width:720px){.chart-grid{grid-template-columns:1fr;}}
-.chart-card{background:#fff;border:1px solid var(--borde);border-radius:var(--r);padding:1rem 1.125rem;}
-.chart-card.full{grid-column:1/-1;}
-.chart-titulo{font-size:13px;font-weight:500;color:var(--tinta);margin-bottom:.875rem;}
+.cc{background:#fff;border:1px solid var(--borde);border-radius:var(--r);padding:1rem 1.125rem;}
+.cc.full{grid-column:1/-1;}
+.ct{font-size:13px;font-weight:500;color:var(--tinta);margin-bottom:.875rem;}
 
 .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.bar-lbl{font-family:var(--mono);font-size:11px;color:var(--tinta);min-width:120px;max-width:120px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.bar-track{flex:1;height:13px;background:var(--papel2);border-radius:2px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:2px;transition:width .5s cubic-bezier(.2,.8,.2,1);}
-.bar-num{font-family:var(--mono);font-size:11px;color:var(--neutro);min-width:24px;}
+.bl{font-family:var(--mono);font-size:11px;color:var(--tinta);min-width:130px;max-width:130px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.bt{flex:1;height:13px;background:var(--papel2);border-radius:2px;overflow:hidden;}
+.bf{height:100%;border-radius:2px;transition:width .5s;}
+.bn{font-family:var(--mono);font-size:11px;color:var(--neutro);min-width:24px;}
 
-.heatmap{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;}
-.hm-cell{height:36px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;cursor:default;}
-.hm-cell:hover{outline:2px solid var(--rojo);}
-.hm-hours{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;margin-top:3px;}
-.hm-hr{font-family:var(--mono);font-size:9px;color:var(--neutro);text-align:center;}
-.hm-legend{display:flex;align-items:center;gap:6px;justify-content:flex-end;margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--neutro);}
-.hm-grad{width:80px;height:10px;background:linear-gradient(to right,#fae9e8,#a8322c);border-radius:2px;}
+.hm{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;}
+.hc{height:36px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;}
+.hc:hover{outline:2px solid var(--rojo);}
+.hh{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;margin-top:3px;}
+.hhr{font-family:var(--mono);font-size:9px;color:var(--neutro);text-align:center;}
+.hml{display:flex;align-items:center;gap:6px;justify-content:flex-end;margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--neutro);}
+.hmg{width:80px;height:10px;background:linear-gradient(to right,#fae9e8,#a8322c);border-radius:2px;}
 
-.tabla-wrap{overflow-x:auto;}
+.tw{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;font-size:12px;}
-thead th{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--neutro);text-transform:uppercase;letter-spacing:.07em;padding:7px 10px;border-bottom:1px solid var(--borde);background:var(--papel);white-space:nowrap;text-align:left;}
-tbody td{padding:7px 10px;border-bottom:1px solid var(--borde);color:var(--tinta);vertical-align:top;}
-tbody tr:last-child td{border-bottom:none;}
-tbody tr:hover td{background:var(--azul-50);}
+th{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--neutro);text-transform:uppercase;letter-spacing:.07em;padding:7px 10px;border-bottom:1px solid var(--borde);background:var(--papel);white-space:nowrap;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid var(--borde);color:var(--tinta);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--azul-50);}
 .badge{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:500;padding:2px 8px;border-radius:4px;}
-.badge-urbana{background:var(--azul-50);color:var(--azul-700);}
-.badge-rural{background:var(--ocre-100);color:#7a5a20;}
-.badge-sub{background:#f3e5f5;color:#6a1b9a;}
-.badge-nd{background:var(--papel2);color:var(--neutro);}
+.bu{background:var(--azul-50);color:var(--azul-700);}
+.br{background:var(--ocre-100);color:#7a5a20;}
+.bsu{background:#f3e5f5;color:#6a1b9a;}
+.bnd{background:var(--papel2);color:var(--neutro);}
 
-.leyenda{display:flex;gap:16px;flex-wrap:wrap;margin-top:.5rem;}
-.ley-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--neutro);}
-.ley-sw{width:12px;height:12px;border-radius:2px;flex-shrink:0;}
+.ley{display:flex;gap:16px;flex-wrap:wrap;margin-top:.5rem;}
+.li{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--neutro);}
+.ls{width:12px;height:12px;border-radius:2px;flex-shrink:0;}
 
-.error-box{background:#fae9e8;border:1px solid #f0b8b5;border-radius:var(--r);padding:1rem 1.25rem;font-size:13px;color:var(--rojo);margin:1.5rem;}
-.error-box code{font-family:var(--mono);font-size:12px;}
+.err-box{background:#fae9e8;border:1px solid #f0b8b5;border-radius:var(--r);padding:1.25rem 1.5rem;font-size:13px;color:var(--rojo);margin:1.5rem;}
+.err-box code{font-family:var(--mono);font-size:11px;display:block;margin-top:.5rem;word-break:break-all;color:var(--tinta);}
 
 footer{text-align:center;font-family:var(--mono);font-size:11px;color:var(--neutro);padding:1.5rem 2rem;border-top:1px solid var(--borde);margin-top:1rem;}
 </style>
@@ -111,113 +109,101 @@ footer{text-align:center;font-family:var(--mono);font-size:11px;color:var(--neut
       <h1 class="hdr-title">Siniestros viales</h1>
       <div class="hdr-sub">Municipio de Esquina · Corrientes · Argentina</div>
     </div>
-    <div>
-      <div class="hdr-periodo" id="hdr-periodo"></div>
-    </div>
+    <div><div class="hdr-periodo" id="hdr-p"></div></div>
   </div>
   <div class="hdr-estado">
     <span class="dot cargando" id="dot"></span>
-    <span id="estado-txt">Cargando datos desde Google Sheets…</span>
+    <span id="est">Cargando datos desde Google Sheets…</span>
   </div>
 </header>
 
 <div class="filtros" id="filtros" style="display:none;">
   <span class="fil-lbl">Inspector</span>
-  <select class="fil-select" id="fil-inspector"><option value="">Todos</option></select>
+  <select class="fil-sel" id="fi"><option value="">Todos</option></select>
   <span class="fil-lbl">Año</span>
-  <select class="fil-select" id="fil-anio"><option value="">Todos</option></select>
+  <select class="fil-sel" id="fa"><option value="">Todos</option></select>
   <span class="fil-lbl">Zona</span>
-  <select class="fil-select" id="fil-zona"><option value="">Todas</option></select>
-  <span class="fil-lbl">Tipo impacto</span>
-  <select class="fil-select" id="fil-impacto"><option value="">Todos</option></select>
-  <button class="fil-btn" onclick="aplicarFiltros()">Aplicar</button>
-  <button class="fil-btn sec" onclick="resetFiltros()">Limpiar</button>
-  <span class="fil-count" id="fil-count"></span>
+  <select class="fil-sel" id="fz"><option value="">Todas</option></select>
+  <span class="fil-lbl">Impacto</span>
+  <select class="fil-sel" id="fm"><option value="">Todos</option></select>
+  <button class="fil-btn" onclick="apFil()">Aplicar</button>
+  <button class="fil-btn sec" onclick="resFil()">Limpiar</button>
+  <span class="fil-count" id="fc"></span>
 </div>
 
-<main class="contenido" id="contenido">
-  <div style="text-align:center;padding:4rem 2rem;font-family:var(--mono);font-size:13px;color:var(--neutro);">
-    Cargando registros…
-  </div>
+<main class="contenido" id="cont">
+  <div style="text-align:center;padding:4rem;font-family:var(--mono);font-size:13px;color:var(--neutro);">Cargando…</div>
 </main>
 
-<footer>
-  Centro Estadístico Municipal (CEM) · Gobierno de Esquina · Secretaría de Tránsito ·
-  <span id="footer-ts"></span>
-</footer>
+<footer>Centro Estadístico Municipal (CEM) · Gobierno de Esquina · <span id="fts"></span></footer>
 
 <script>
+// ── URL CSV publicado — reemplazar si cambia ──────────────────
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS85p2PFDEKhREl0C-ERzMUzfDNSui6eJniTOnV_5VZRAQe0dAzKcps3Yc9V_r2aJJXgFTElqwZ4Ski/pub?output=csv';
+
+// ── Columnas exactas (fila 2 del sheet, tras borrar fila 1) ───
+const C = {
+  timestamp: 'Marca temporal',
+  hora:      'Hora del siniestro',
+  fecha:     'Fecha del siniestro',
+  lugar:     'Lugar',
+  zona:      'Zona',
+  marcaV1:   'Marca del Veh\u00edculo N\u00b0 1',
+  modeloV1:  'Modelo del Veh\u00edculo N\u00b0 1',
+  tipoV1:    'Tipo',
+  domV1:     'Dominio del Veh\u00edculo N\u00b0 1',
+  marcaV2:   'Marca del Veh\u00edculo N\u00b0 2',
+  modeloV2:  'Modelo del Veh\u00edculo N\u00b0 2',
+  tipoV2:    'Tipo 2',
+  domV2:     'Dominio del Veh\u00edculo N\u00b0 2',
+  superficie:'Estado de la Superficie',
+  clima:     'Situaci\u00f3n clim\u00e1tica y visibilidad',
+  impacto:   'Tipo de Impacto',
+  inspector: 'Inspector de tr\u00e1nsito Nombre',
+  legajo:    'Legajo del Inspector',
+  secretario:'Secretario Nombre',
+  infracc:   'Regla/s de tr\u00e1nsito infringida/s',
+  obsFin:    'Observaciones finales',
+  condV1:    'Apellido y Nombre del Conductor N\u00b0 1',
+  condV2:    'Conductor del Veh\u00edculo N\u00b0 2',
+  edadV1:    'Edad del Conductor N\u00b0 1',
+  edadV2:    'Edad del Conductor N\u00b0 2',
+};
 
 // ── Parseo CSV ────────────────────────────────────────────────
 function parseCSV(txt) {
-  var lines = txt.trim().split('\n');
+  const lines = txt.trim().split(/\r?\n/);
   if (lines.length < 2) return [];
-  var headers = parseFila(lines[0]).map(function(h){ return h.trim(); });
-  return lines.slice(1).map(function(l) {
-    var vals = parseFila(l);
-    var obj = {};
-    headers.forEach(function(h,i){ obj[h] = (vals[i]||'').trim(); });
-    return obj;
-  }).filter(function(r){
-    return Object.values(r).some(function(v){ return v && v.replace(/[\s\/]/g,'') !== ''; });
-  });
+  const headers = splitRow(lines[0]).map(h => h.trim());
+  return lines.slice(1).map(l => {
+    const vals = splitRow(l);
+    const o = {};
+    headers.forEach((h, i) => { o[h] = (vals[i] || '').trim(); });
+    return o;
+  }).filter(r => Object.values(r).some(v => v && v.replace(/[\s\/\-\.]/g,'') !== ''));
 }
 
-function parseFila(line) {
-  var res=[], cur='', inQ=false;
-  for (var i=0;i<line.length;i++) {
-    if (line[i]==='"'){ if(inQ&&line[i+1]==='"'){cur+='"';i++;}else inQ=!inQ; }
-    else if (line[i]===','&&!inQ){ res.push(cur); cur=''; }
-    else cur+=line[i];
+function splitRow(line) {
+  const res = []; let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    if (line[i] === '"') { if (inQ && line[i+1] === '"') { cur += '"'; i++; } else inQ = !inQ; }
+    else if (line[i] === ',' && !inQ) { res.push(cur); cur = ''; }
+    else cur += line[i];
   }
   res.push(cur);
   return res;
 }
 
-function limpio(v) {
-  if (!v) return '';
-  var s = v.trim();
-  if (/^[\s\/\-\.\*]+$/.test(s)) return '';
-  return s;
+function v(row, key) {
+  const val = row[key] || '';
+  const s = val.trim();
+  return /^[\s\/\-\.\\]+$/.test(s) ? '' : s;
 }
 
-// ── La planilla tiene encabezados compuestos "SECCIÓN/Campo" ──
-// Primera fila real = encabezados de sección (fila 1 del sheet)
-// Segunda fila = nombres de campo
-// Pero Google Sheets pub CSV los combina como "SECCIÓN/Campo"
-// Definimos las claves exactas que vimos en la lectura del Drive:
-var COL = {
-  timestamp:   'DATOS DEL SINIESTRO/Marca temporal',
-  hora:        'DATOS DEL SINIESTRO/Hora del siniestro',
-  fecha:       'DATOS DEL SINIESTRO/Fecha del siniestro',
-  lugar:       'DATOS DEL SINIESTRO/Lugar',
-  zona:        'DATOS DEL SINIESTRO/Zona',
-  marcaV1:     'VEHÍCULO N° 1 — DATOS/Marca del Vehículo N° 1',
-  modeloV1:    'VEHÍCULO N° 1 — DATOS/Modelo del Vehículo N° 1',
-  tipoV1:      'VEHÍCULO N° 1 — DATOS/Tipo',
-  condV1:      'VEHÍCULO N° 1 — CONDUCTOR/Apellido y Nombre del Conductor N° 1',
-  marcaV2:     'VEHÍCULO N° 2 — DATOS/Marca del Vehículo N° 2',
-  modeloV2:    'VEHÍCULO N° 2 — DATOS/Modelo del Vehículo N° 2',
-  tipoV2:      'VEHÍCULO N° 2 — DATOS/Tipo 2',
-  condV2:      'VEHÍCULO N° 2 — CONDUCTOR/Conductor del Vehículo N° 2',
-  superficie:  'ESCENA/Estado de la Superficie',
-  clima:       'ESCENA/Situación climática y visibilidad',
-  impacto:     'ESCENA/Tipo de Impacto',
-  inspector:   'ACTUANTES/Inspector de tránsito Nombre',
-  legajo:      'ACTUANTES/Legajo del Inspector',
-  secretario:  'ACTUANTES/Secretario Nombre',
-  infracc:     'OBSERVACIONES/Regla/s de tránsito infringida/s',
-  obsFin:      'OBS. FINALES/Observaciones finales',
-};
-
-function g(r, key) {
-  return limpio(r[key] || '');
-}
-
+// ── Normalización ─────────────────────────────────────────────
 function normZona(z) {
   if (!z) return 'Sin dato';
-  var l = z.toLowerCase();
+  const l = z.toLowerCase();
   if (l.includes('sub')) return 'Sub urbana';
   if (l.includes('urban')) return 'Urbana';
   if (l.includes('rural')) return 'Rural';
@@ -226,246 +212,272 @@ function normZona(z) {
 
 function normMarca(s) {
   if (!s) return 'Sin dato';
-  var l = s.toLowerCase();
-  if (l.includes('honda')) return 'Honda';
-  if (l.includes('volkswagen')||l.includes('wolks')||l.includes('vw')) return 'Volkswagen';
-  if (l.includes('toyota')) return 'Toyota';
-  if (l.includes('chevrolet')) return 'Chevrolet';
-  if (l.includes('renault')) return 'Renault';
-  if (l.includes('fiat')) return 'Fiat';
-  if (l.includes('keller')) return 'Keller';
-  if (l.includes('corven')) return 'Corven';
-  if (l.includes('guerrero')) return 'Guerrero';
-  if (l.includes('yamaha')) return 'Yamaha';
-  if (l.includes('zanella')) return 'Zanella';
-  if (l.includes('peugeot')) return 'Peugeot';
-  if (l.includes('motomel')) return 'Motomel';
-  if (l.includes('ford')) return 'Ford';
-  if (l.includes('nissan')) return 'Nissan';
-  if (l.includes('brava')) return 'Brava';
-  if (l.includes('mercedes')||l.includes('benz')) return 'Mercedes Benz';
-  if (l.includes('citroen')||l.includes('citro')) return 'Citroën';
-  if (l.includes('no posee')||l===''||l==='—') return 'Sin dato';
-  return s.charAt(0).toUpperCase()+s.slice(1).toLowerCase();
+  const l = s.toLowerCase();
+  const m = [
+    ['honda','Honda'],['volkswagen','Volkswagen'],['toyota','Toyota'],
+    ['chevrolet','Chevrolet'],['renault','Renault'],['fiat','Fiat'],
+    ['keller','Keller'],['corven','Corven'],['guerrero','Guerrero'],
+    ['yamaha','Yamaha'],['zanella','Zanella'],['peugeot','Peugeot'],
+    ['motomel','Motomel'],['ford','Ford'],['nissan','Nissan'],
+    ['brava','Brava'],['mercedes','Mercedes Benz'],['citroen','Citroën'],
+    ['euromot','Euromot'],['motomel','Motomel'],['zs','ZS Motor'],
+    ['appia','Appia'],['gilera','Gilera'],['hermann','Hermann'],
+  ];
+  for (const [k,n] of m) { if (l.includes(k)) return n; }
+  if (!s || /^(no posee|\/\/|—|\s*)$/i.test(s)) return 'Sin dato';
+  return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 }
 
 function normImpacto(s) {
   if (!s) return 'Sin dato';
-  var l = s.toLowerCase();
+  const l = s.toLowerCase();
   if (l.includes('choque')) return 'Choque';
   if (l.includes('atropello')) return 'Atropello';
-  if (l.includes('ca\u00edda')||l.includes('caida')) return 'Caída';
-  if (l.includes('incendio')) return 'Incendio';
-  return s.charAt(0).toUpperCase()+s.slice(1).toLowerCase();
+  if (l.includes('ca\xedda') || l.includes('caida')) return 'Caída';
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 function normClima(s) {
   if (!s) return 'Sin dato';
-  var l = s.toLowerCase();
+  const l = s.toLowerCase();
   if (l.includes('noche')) return 'Noche';
-  if (l.includes('d\u00eda')||l.includes('dia')) return 'Día';
+  if (l.includes('d\xeda') || l.includes('dia')) return 'Día';
   return s.split(',')[0].trim();
 }
 
-function normSuperficie(s) {
+function normSup(s) {
   if (!s) return 'Sin dato';
-  var l = s.toLowerCase();
-  if (l.includes('bueno')||l.includes('\u00f3ptimo')||l.includes('optimo')) return 'Bueno / Óptimo';
+  const l = s.toLowerCase();
+  if (l.includes('ptimo') || l.includes('bueno')) return 'Bueno / Óptimo';
   if (l.includes('regular')) return 'Regular';
   if (l.includes('malo')) return 'Malo';
   return s.split(',')[0].trim();
 }
 
 function getAnio(r) {
-  var f = g(r, COL.fecha);
+  const f = v(r, C.fecha);
   if (!f) return 'Sin fecha';
-  var m = f.match(/(\d{4})/);
+  let m = f.match(/(\d{4})/);
   if (m) return m[1];
-  var p = f.split('/');
-  if (p.length===3){ var y=parseInt(p[2]); return y>2000?String(y):'Sin fecha'; }
+  const p = f.split('/');
+  if (p.length === 3) { const y = parseInt(p[2]); return y > 2000 ? String(y) : 'Sin fecha'; }
   return 'Sin fecha';
 }
 
-function getHoraNum(r) {
-  var h = g(r, COL.hora);
+function getHora(r) {
+  const h = v(r, C.hora);
   if (!h) return -1;
-  var n = parseInt(h.replace(':','.'));
-  return isNaN(n)?-1:Math.floor(n);
+  const n = parseInt(h.split(':')[0]);
+  return isNaN(n) ? -1 : n;
 }
 
-function hayHospitalizado(r) {
-  var obs = (g(r,COL.obsFin)+' '+g(r,COL.infracc)).toLowerCase();
+function hayHosp(r) {
+  const obs = (v(r, C.obsFin) + ' ' + v(r, C.infracc)).toLowerCase();
   return obs.includes('hospital');
 }
 
+function tipoVehiculo(t) {
+  if (!t) return 'Sin dato';
+  const l = t.toLowerCase();
+  if (l.includes('moto')) return 'Motocicleta';
+  if (l.includes('pick') || l.includes('camioneta')) return 'Camioneta/Pick up';
+  if (l.includes('sedan') || l.includes('auto')) return 'Automóvil';
+  if (l.includes('cami\xf3n') || l.includes('camion')) return 'Camión';
+  if (l.includes('furgon') || l.includes('furgón')) return 'Furgón';
+  if (l.includes('bici')) return 'Bicicleta';
+  return t.charAt(0).toUpperCase() + t.slice(1).toLowerCase();
+}
+
 function normalizar(raw) {
-  return raw.map(function(r){
-    return {
-      _fecha:   g(r,COL.fecha),
-      _hora:    g(r,COL.hora),
-      _hNum:    getHoraNum(r),
-      _anio:    getAnio(r),
-      _lugar:   g(r,COL.lugar)||'—',
-      _zona:    normZona(g(r,COL.zona)),
-      _impacto: normImpacto(g(r,COL.impacto)),
-      _clima:   normClima(g(r,COL.clima)),
-      _sup:     normSuperficie(g(r,COL.superficie)),
-      _insp:    g(r,COL.inspector)||'Sin dato',
-      _mV1:     normMarca(g(r,COL.marcaV1)),
-      _mV2:     normMarca(g(r,COL.marcaV2)),
-      _tV1:     g(r,COL.tipoV1)||'—',
-      _hosp:    hayHospitalizado(r),
-      _raw:     r,
-    };
-  });
+  return raw.map(r => ({
+    _fecha:   v(r, C.fecha),
+    _hora:    v(r, C.hora),
+    _hNum:    getHora(r),
+    _anio:    getAnio(r),
+    _lugar:   v(r, C.lugar) || '—',
+    _zona:    normZona(v(r, C.zona)),
+    _impacto: normImpacto(v(r, C.impacto)),
+    _clima:   normClima(v(r, C.clima)),
+    _sup:     normSup(v(r, C.superficie)),
+    _insp:    v(r, C.inspector) || 'Sin dato',
+    _mV1:     normMarca(v(r, C.marcaV1)),
+    _mV2:     normMarca(v(r, C.marcaV2)),
+    _tV1:     tipoVehiculo(v(r, C.tipoV1)),
+    _tV2:     tipoVehiculo(v(r, C.tipoV2)),
+    _hosp:    hayHosp(r),
+    _raw:     r,
+  }));
 }
 
 // ── Estado global ─────────────────────────────────────────────
-var TODOS=[], FILTRADOS=[];
-var chartEvol=null, chartZona=null;
+let TODOS = [], FILTRADOS = [];
+let chartEvol = null, chartZona = null;
 
 // ── Carga ─────────────────────────────────────────────────────
-async function cargarDatos() {
-  setEstado('cargando','Cargando datos desde Google Sheets…');
+async function cargar() {
+  setEst('cargando', 'Cargando datos desde Google Sheets…');
   try {
-    var res = await fetch(CSV_URL);
-    if (!res.ok) throw new Error('HTTP '+res.status);
-    var txt = await res.text();
-    var raw = parseCSV(txt);
-    if (!raw.length) throw new Error('CSV sin datos.');
+    const res = await fetch(CSV_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const txt = await res.text();
+    const raw = parseCSV(txt);
+    if (!raw.length) throw new Error('El CSV no tiene datos válidos.');
     TODOS = normalizar(raw);
     FILTRADOS = [...TODOS];
-    popularFiltros();
+    poblarFiltros();
     renderTodo();
-    var ts = new Date().toLocaleString('es-AR',{dateStyle:'short',timeStyle:'short'});
-    setEstado('ok','Datos actualizados · '+ts+' · '+TODOS.length+' registros');
-    document.getElementById('footer-ts').textContent = 'Última carga: '+ts;
+    const ts = new Date().toLocaleString('es-AR', {dateStyle:'short', timeStyle:'short'});
+    setEst('ok', 'Datos actualizados · ' + ts + ' · ' + TODOS.length + ' registros');
+    document.getElementById('fts').textContent = 'Última carga: ' + ts;
     document.getElementById('filtros').style.display = 'flex';
   } catch(e) {
-    setEstado('error','Error: '+e.message);
-    document.getElementById('contenido').innerHTML =
-      '<div class="error-box"><strong>No se pudieron cargar los datos.</strong><br><br>'+
-      'Error técnico: <code>'+e.message+'</code></div>';
+    setEst('err', 'Error al cargar: ' + e.message);
+    document.getElementById('cont').innerHTML =
+      '<div class="err-box"><strong>No se pudieron cargar los datos.</strong><br><br>' +
+      'Verificá que la planilla esté publicada como CSV (Archivo → Publicar en la web).' +
+      '<code>' + e.message + '</code></div>';
   }
 }
 
-function setEstado(tipo,txt){
-  var d=document.getElementById('dot');
-  d.className='dot'+(tipo==='cargando'?' cargando':tipo==='error'?' error':'');
-  document.getElementById('estado-txt').textContent=txt;
+function setEst(tipo, txt) {
+  document.getElementById('dot').className = 'dot' + (tipo==='cargando'?' cargando':tipo==='err'?' err':'');
+  document.getElementById('est').textContent = txt;
 }
 
 // ── Filtros ───────────────────────────────────────────────────
-function popularFiltros(){
-  poblar('fil-inspector',[...new Set(TODOS.map(function(r){return r._insp;}))].sort());
-  poblar('fil-anio',[...new Set(TODOS.map(function(r){return r._anio;}))].filter(function(a){return a!=='Sin fecha';}).sort());
-  poblar('fil-zona',[...new Set(TODOS.map(function(r){return r._zona;}))].sort());
-  poblar('fil-impacto',[...new Set(TODOS.map(function(r){return r._impacto;}))].sort());
+function poblarFiltros() {
+  poblar('fi', [...new Set(TODOS.map(r=>r._insp))].sort());
+  poblar('fa', [...new Set(TODOS.map(r=>r._anio))].filter(a=>a!=='Sin fecha').sort());
+  poblar('fz', [...new Set(TODOS.map(r=>r._zona))].sort());
+  poblar('fm', [...new Set(TODOS.map(r=>r._impacto))].sort());
 }
 
-function poblar(id,vals){
-  var s=document.getElementById(id);
-  var first=s.options[0].outerHTML;
-  s.innerHTML=first;
-  vals.forEach(function(v){var o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o);});
+function poblar(id, vals) {
+  const s = document.getElementById(id);
+  const first = s.options[0].outerHTML;
+  s.innerHTML = first;
+  vals.forEach(v => { const o = document.createElement('option'); o.value=v; o.textContent=v; s.appendChild(o); });
 }
 
-function aplicarFiltros(){
-  var insp=document.getElementById('fil-inspector').value;
-  var anio=document.getElementById('fil-anio').value;
-  var zona=document.getElementById('fil-zona').value;
-  var imp =document.getElementById('fil-impacto').value;
-  FILTRADOS=TODOS.filter(function(r){
-    return(!insp||r._insp===insp)&&(!anio||r._anio===anio)&&(!zona||r._zona===zona)&&(!imp||r._impacto===imp);
-  });
+function apFil() {
+  const insp = document.getElementById('fi').value;
+  const anio = document.getElementById('fa').value;
+  const zona = document.getElementById('fz').value;
+  const imp  = document.getElementById('fm').value;
+  FILTRADOS = TODOS.filter(r =>
+    (!insp || r._insp===insp) && (!anio || r._anio===anio) &&
+    (!zona || r._zona===zona) && (!imp  || r._impacto===imp)
+  );
   renderTodo();
 }
 
-function resetFiltros(){
-  ['fil-inspector','fil-anio','fil-zona','fil-impacto'].forEach(function(id){document.getElementById(id).value='';});
-  FILTRADOS=[...TODOS];
+function resFil() {
+  ['fi','fa','fz','fm'].forEach(id => document.getElementById(id).value='');
+  FILTRADOS = [...TODOS];
   renderTodo();
 }
 
 // ── Helpers ───────────────────────────────────────────────────
-function contarPor(arr,campo){
-  var c={};
-  arr.forEach(function(r){var k=r[campo]||'Sin dato';c[k]=(c[k]||0)+1;});
-  return Object.entries(c).sort(function(a,b){return b[1]-a[1];});
+function contarPor(arr, campo) {
+  const c = {};
+  arr.forEach(r => { const k = r[campo]||'Sin dato'; c[k]=(c[k]||0)+1; });
+  return Object.entries(c).sort((a,b) => b[1]-a[1]);
 }
 
-// ── Render ────────────────────────────────────────────────────
-function renderTodo(){
-  var d=FILTRADOS;
-  document.getElementById('fil-count').textContent=d.length+' registros';
-  var anios=[...new Set(d.map(function(r){return r._anio;}).filter(function(a){return a!=='Sin fecha';}))].sort();
-  document.getElementById('hdr-periodo').textContent=anios.length?anios.join(' – '):'';
+function pct(n, t) { return t ? Math.round((n/t)*100)+'%' : '0%'; }
 
-  document.getElementById('contenido').innerHTML=`
+// ── Render principal ──────────────────────────────────────────
+function renderTodo() {
+  const d = FILTRADOS;
+  document.getElementById('fc').textContent = d.length + ' registros';
+  const anios = [...new Set(d.map(r=>r._anio).filter(a=>a!=='Sin fecha'))].sort();
+  document.getElementById('hdr-p').textContent = anios.length ? anios.join(' – ') : '';
+
+  document.getElementById('cont').innerHTML = `
     <div class="seccion">
       <div class="sec-titulo">Resumen general</div>
       <div class="metric-grid" id="metrics"></div>
     </div>
     <div class="seccion">
-      <div class="sec-titulo">Distribución</div>
+      <div class="sec-titulo">Distribución geográfica y tipo de siniestro</div>
       <div class="chart-grid">
-        <div class="chart-card">
-          <div class="chart-titulo">Zona del siniestro</div>
+        <div class="cc">
+          <div class="ct">Zona del siniestro</div>
           <div style="position:relative;width:100%;height:200px;">
-            <canvas id="ch-zona" role="img" aria-label="Siniestros por zona"></canvas>
+            <canvas id="ch-zona" role="img" aria-label="Distribución por zona"></canvas>
           </div>
-          <div class="leyenda" id="ley-zona"></div>
+          <div class="ley" id="ley-zona"></div>
         </div>
-        <div class="chart-card">
-          <div class="chart-titulo">Tipo de impacto</div>
-          <div class="bars" id="ch-impacto"></div>
+        <div class="cc">
+          <div class="ct">Tipo de impacto</div>
+          <div class="bars" id="ch-imp"></div>
         </div>
       </div>
     </div>
     <div class="seccion">
-      <div class="sec-titulo">Marcas más involucradas</div>
+      <div class="sec-titulo">Vehículos involucrados</div>
       <div class="chart-grid">
-        <div class="chart-card"><div class="chart-titulo">Vehículo N° 1</div><div class="bars" id="ch-m1"></div></div>
-        <div class="chart-card"><div class="chart-titulo">Vehículo N° 2</div><div class="bars" id="ch-m2"></div></div>
+        <div class="cc">
+          <div class="ct">Marca — Vehículo N° 1</div>
+          <div class="bars" id="ch-m1"></div>
+        </div>
+        <div class="cc">
+          <div class="ct">Marca — Vehículo N° 2</div>
+          <div class="bars" id="ch-m2"></div>
+        </div>
+      </div>
+      <div class="chart-grid" style="margin-top:12px;">
+        <div class="cc">
+          <div class="ct">Tipo de vehículo N° 1</div>
+          <div class="bars" id="ch-t1"></div>
+        </div>
+        <div class="cc">
+          <div class="ct">Tipo de vehículo N° 2</div>
+          <div class="bars" id="ch-t2"></div>
+        </div>
       </div>
     </div>
     <div class="seccion">
       <div class="sec-titulo">Evolución por año</div>
-      <div class="chart-card full">
-        <div class="chart-titulo">Siniestros registrados por año</div>
+      <div class="cc full">
+        <div class="ct">Siniestros registrados por año</div>
         <div style="position:relative;width:100%;height:220px;">
           <canvas id="ch-evol" role="img" aria-label="Siniestros por año"></canvas>
         </div>
-        <div class="leyenda" id="ley-evol"></div>
+        <div class="ley" id="ley-evol"></div>
       </div>
     </div>
     <div class="seccion">
       <div class="sec-titulo">Distribución horaria — hora del siniestro</div>
-      <div class="chart-card full">
+      <div class="cc full">
         <div style="overflow-x:auto;">
-          <div class="heatmap" id="ch-hm"></div>
-          <div class="hm-hours" id="ch-hrs"></div>
+          <div class="hm" id="ch-hm"></div>
+          <div class="hh" id="ch-hrs"></div>
         </div>
-        <div class="hm-legend"><span>0</span><div class="hm-grad"></div><span>máx</span></div>
+        <div class="hml"><span>0</span><div class="hmg"></div><span>máx</span></div>
       </div>
     </div>
     <div class="seccion">
-      <div class="sec-titulo">Inspectores actuantes · Superficie · Clima</div>
+      <div class="sec-titulo">Inspectores actuantes · Superficie · Condición climática</div>
       <div class="chart-grid">
-        <div class="chart-card"><div class="chart-titulo">Por inspector</div><div class="bars" id="ch-insp"></div></div>
-        <div class="chart-card"><div class="chart-titulo">Estado de la superficie</div><div class="bars" id="ch-sup"></div></div>
+        <div class="cc"><div class="ct">Por inspector</div><div class="bars" id="ch-insp"></div></div>
+        <div class="cc"><div class="ct">Estado de la superficie</div><div class="bars" id="ch-sup"></div></div>
+      </div>
+      <div class="chart-grid" style="margin-top:12px;">
+        <div class="cc full"><div class="ct">Condición climática</div><div class="bars" id="ch-clim"></div></div>
       </div>
     </div>
     <div class="seccion">
-      <div class="sec-titulo">Últimos 20 registros</div>
-      <div class="chart-card full" style="padding:.75rem;">
-        <div class="tabla-wrap">
+      <div class="sec-titulo">Últimos 20 siniestros registrados</div>
+      <div class="cc full" style="padding:.75rem;">
+        <div class="tw">
           <table>
             <thead><tr>
               <th>Fecha</th><th>Hora</th><th>Lugar</th><th>Zona</th>
-              <th>Impacto</th><th>Veh. 1</th><th>Veh. 2</th><th>Hospitalizado</th><th>Inspector</th>
+              <th>Impacto</th><th>Veh. 1</th><th>Veh. 2</th>
+              <th>Hospitalizado</th><th>Inspector</th>
             </tr></thead>
-            <tbody id="tabla-body"></tbody>
+            <tbody id="tabla"></tbody>
           </table>
         </div>
       </div>
@@ -474,120 +486,127 @@ function renderTodo(){
 
   renderMetrics(d);
   renderZona(d);
-  renderBars('ch-impacto', contarPor(d,'_impacto'),  '#0e5a9e');
-  renderBars('ch-m1',      contarPor(d,'_mV1'),      '#a8322c');
-  renderBars('ch-m2',      contarPor(d,'_mV2'),      '#b8863d');
+  renderBars('ch-imp',  contarPor(d,'_impacto'), '#0e5a9e');
+  renderBars('ch-m1',   contarPor(d,'_mV1'),     '#a8322c');
+  renderBars('ch-m2',   contarPor(d,'_mV2'),     '#b8863d');
+  renderBars('ch-t1',   contarPor(d,'_tV1'),     '#0a3a68');
+  renderBars('ch-t2',   contarPor(d,'_tV2'),     '#2f7d32');
   renderEvol(d);
   renderHeatmap(d);
-  renderBars('ch-insp',    contarPor(d,'_insp'),     '#0a3a68');
-  renderBars('ch-sup',     contarPor(d,'_sup'),      '#2f7d32');
+  renderBars('ch-insp', contarPor(d,'_insp'),    '#0e5a9e');
+  renderBars('ch-sup',  contarPor(d,'_sup'),     '#2f7d32');
+  renderBars('ch-clim', contarPor(d,'_clima'),   '#b8863d');
   renderTabla(d);
 }
 
-function renderMetrics(d){
-  var total  = d.length;
-  var urbana = d.filter(function(r){return r._zona==='Urbana';}).length;
-  var rural  = d.filter(function(r){return r._zona==='Rural'||r._zona==='Sub urbana';}).length;
-  var hosp   = d.filter(function(r){return r._hosp;}).length;
-  var choque = d.filter(function(r){return r._impacto==='Choque';}).length;
-  var atrop  = d.filter(function(r){return r._impacto==='Atropello';}).length;
-  function pct(n){ return total?Math.round((n/total)*100)+'% del total':''; }
-  document.getElementById('metrics').innerHTML=
-    mc('azul','Total siniestros',total,'en el período')+
-    mc('rojo','Urbanos',urbana,pct(urbana))+
-    mc('ocre','Rurales / suburbanos',rural,pct(rural))+
-    mc('amar','Choques',choque,pct(choque))+
-    mc('ocre','Atropellos',atrop,pct(atrop))+
-    mc('rojo','Con hospitalizados',hosp,pct(hosp));
+function renderMetrics(d) {
+  const t = d.length;
+  const urb  = d.filter(r=>r._zona==='Urbana').length;
+  const rur  = d.filter(r=>r._zona==='Rural'||r._zona==='Sub urbana').length;
+  const hosp = d.filter(r=>r._hosp).length;
+  const cho  = d.filter(r=>r._impacto==='Choque').length;
+  const atr  = d.filter(r=>r._impacto==='Atropello').length;
+  document.getElementById('metrics').innerHTML =
+    mc('azul','Total siniestros', t, 'en el período seleccionado') +
+    mc('rojo','Urbanos',  urb,  pct(urb,t)+' del total') +
+    mc('ocre','Rurales / suburbanos', rur, pct(rur,t)+' del total') +
+    mc('amar','Choques',  cho,  pct(cho,t)+' del total') +
+    mc('ocre','Atropellos', atr, pct(atr,t)+' del total') +
+    mc('rojo','Con hospitalizados', hosp, pct(hosp,t)+' del total');
 }
 
-function mc(cls,lbl,val,sub){
-  return '<div class="metric-card '+cls+'"><div class="m-lbl">'+lbl+'</div><div class="m-val">'+val+'</div><div class="m-sub">'+sub+'</div></div>';
+function mc(cls,lbl,val,sub) {
+  return `<div class="mc ${cls}"><div class="m-lbl">${lbl}</div><div class="m-val">${val}</div><div class="m-sub">${sub}</div></div>`;
 }
 
-function renderZona(d){
-  var orden=['Urbana','Sub urbana','Rural','Sin dato'];
-  var bgs={'Urbana':'#0e5a9e','Sub urbana':'#6a1b9a','Rural':'#b8863d','Sin dato':'#9e9e9e'};
-  var datos=orden.map(function(k){return d.filter(function(r){return r._zona===k;}).length;});
-  if(chartZona){chartZona.destroy();chartZona=null;}
-  document.getElementById('ley-zona').innerHTML=orden.map(function(k,i){
-    return '<span class="ley-item"><span class="ley-sw" style="background:'+bgs[k]+';"></span>'+k+': '+datos[i]+'</span>';
-  }).join('');
-  chartZona=new Chart(document.getElementById('ch-zona'),{
+function renderZona(d) {
+  const ord=['Urbana','Sub urbana','Rural','Sin dato'];
+  const bgs={'Urbana':'#0e5a9e','Sub urbana':'#6a1b9a','Rural':'#b8863d','Sin dato':'#9e9e9e'};
+  const datos = ord.map(k => d.filter(r=>r._zona===k).length);
+  if (chartZona) { chartZona.destroy(); chartZona=null; }
+  document.getElementById('ley-zona').innerHTML = ord.map((k,i)=>
+    `<span class="li"><span class="ls" style="background:${bgs[k]};"></span>${k}: ${datos[i]}</span>`
+  ).join('');
+  chartZona = new Chart(document.getElementById('ch-zona'), {
     type:'doughnut',
-    data:{labels:orden,datasets:[{data:datos,backgroundColor:orden.map(function(k){return bgs[k];}),borderWidth:2,borderColor:'#fff'}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ' '+ctx.label+': '+ctx.raw;}}}},cutout:'60%'}
+    data:{ labels:ord, datasets:[{ data:datos, backgroundColor:ord.map(k=>bgs[k]), borderWidth:2, borderColor:'#fff' }] },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{callbacks:{label:ctx=>' '+ctx.label+': '+ctx.raw}} },
+      cutout:'60%' }
   });
 }
 
-function renderBars(id,data,color){
-  var max=data[0]?data[0][1]:1;
-  var el=document.getElementById(id);
-  if(!el) return;
-  el.innerHTML=data.slice(0,8).map(function(e){
-    return '<div class="bar-row">'+
-      '<div class="bar-lbl" title="'+e[0]+'">'+e[0]+'</div>'+
-      '<div class="bar-track"><div class="bar-fill" style="width:'+Math.round((e[1]/max)*100)+'%;background:'+color+';"></div></div>'+
-      '<div class="bar-num">'+e[1]+'</div></div>';
-  }).join('');
+function renderBars(id, data, color) {
+  const max = data[0] ? data[0][1] : 1;
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = data.slice(0,9).map(([lbl,val]) =>
+    `<div class="bar-row">
+      <div class="bl" title="${lbl}">${lbl}</div>
+      <div class="bt"><div class="bf" style="width:${Math.round((val/max)*100)}%;background:${color};"></div></div>
+      <div class="bn">${val}</div>
+    </div>`
+  ).join('');
 }
 
-function renderEvol(d){
-  var anios=[...new Set(d.map(function(r){return r._anio;}).filter(function(a){return a!=='Sin fecha';}))].sort();
-  var counts=anios.map(function(a){return d.filter(function(r){return r._anio===a;}).length;});
-  if(chartEvol){chartEvol.destroy();chartEvol=null;}
-  document.getElementById('ley-evol').innerHTML='<span class="ley-item"><span class="ley-sw" style="background:#a8322c;"></span>Siniestros por año</span>';
-  chartEvol=new Chart(document.getElementById('ch-evol'),{
+function renderEvol(d) {
+  const anios = [...new Set(d.map(r=>r._anio).filter(a=>a!=='Sin fecha'))].sort();
+  const counts = anios.map(a => d.filter(r=>r._anio===a).length);
+  if (chartEvol) { chartEvol.destroy(); chartEvol=null; }
+  document.getElementById('ley-evol').innerHTML =
+    '<span class="li"><span class="ls" style="background:#a8322c;"></span>Siniestros por año</span>';
+  chartEvol = new Chart(document.getElementById('ch-evol'), {
     type:'bar',
-    data:{labels:anios,datasets:[{label:'Siniestros',data:counts,backgroundColor:'#a8322c',borderRadius:3,barPercentage:.55}]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false}},
+    data:{ labels:anios, datasets:[{ label:'Siniestros', data:counts, backgroundColor:'#a8322c', borderRadius:3, barPercentage:.55 }] },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{mode:'index',intersect:false} },
       scales:{
-        x:{grid:{display:false},ticks:{font:{size:11,family:'IBM Plex Mono'},color:'#6b6760'}},
-        y:{beginAtZero:true,grid:{color:'rgba(0,0,0,0.05)'},ticks:{font:{size:11,family:'IBM Plex Mono'},color:'#6b6760',stepSize:5}}
-      }}
+        x:{ grid:{display:false}, ticks:{font:{size:11,family:'IBM Plex Mono'},color:'#6b6760'} },
+        y:{ beginAtZero:true, grid:{color:'rgba(0,0,0,0.05)'}, ticks:{font:{size:11,family:'IBM Plex Mono'},color:'#6b6760',stepSize:5} }
+      }
+    }
   });
 }
 
-function renderHeatmap(d){
-  var conteo={};
-  for(var i=0;i<24;i++) conteo[i]=0;
-  d.filter(function(r){return r._hNum>=0;}).forEach(function(r){conteo[r._hNum]=(conteo[r._hNum]||0)+1;});
-  var maxC=Math.max.apply(null,Object.values(conteo).concat([1]));
-  var rojos=['#fae9e8','#f5c4c3','#f09594','#e24b4a','#a32d2d','#791f1f','#501313'];
-  function gc(v){return v===0?rojos[0]:rojos[Math.min(6,Math.max(1,Math.ceil((v/maxC)*6)))];}
-  function gt(v){return v>maxC*.4?'#fff':'#6b6760';}
-  var hm=document.getElementById('ch-hm'), hr=document.getElementById('ch-hrs');
-  if(!hm||!hr) return;
-  var hmH='',hrH='';
-  for(var h=0;h<24;h++){
-    var v=conteo[h]||0;
-    hmH+='<div class="hm-cell" style="background:'+gc(v)+';color:'+gt(v)+';" title="'+h+':00 — '+v+' siniestros">'+(v||'')+'</div>';
-    hrH+='<div class="hm-hr">'+h+'</div>';
+function renderHeatmap(d) {
+  const conteo = {};
+  for (let i=0;i<24;i++) conteo[i]=0;
+  d.filter(r=>r._hNum>=0).forEach(r=>{ conteo[r._hNum]=(conteo[r._hNum]||0)+1; });
+  const maxC = Math.max(...Object.values(conteo), 1);
+  const rojos = ['#fae9e8','#f5c4c3','#f09594','#e24b4a','#a32d2d','#791f1f','#501313'];
+  const gc = v => v===0 ? rojos[0] : rojos[Math.min(6, Math.max(1, Math.ceil((v/maxC)*6)))];
+  const gt = v => v>maxC*.4 ? '#fff' : '#6b6760';
+  const hm = document.getElementById('ch-hm');
+  const hr = document.getElementById('ch-hrs');
+  if (!hm||!hr) return;
+  let hH='', rH='';
+  for (let h=0;h<24;h++) {
+    const val = conteo[h]||0;
+    hH += `<div class="hc" style="background:${gc(val)};color:${gt(val)};" title="${h}:00 — ${val} siniestros">${val||''}</div>`;
+    rH += `<div class="hhr">${h}</div>`;
   }
-  hm.innerHTML=hmH; hr.innerHTML=hrH;
+  hm.innerHTML=hH; hr.innerHTML=rH;
 }
 
-function renderTabla(d){
-  var rec=[...d].reverse().slice(0,20);
-  var clsZ={'Urbana':'badge-urbana','Rural':'badge-rural','Sub urbana':'badge-sub'};
-  document.getElementById('tabla-body').innerHTML=rec.map(function(r){
-    return '<tr>'+
-      '<td style="font-family:var(--mono);font-size:11px;white-space:nowrap;">'+r._fecha+'</td>'+
-      '<td style="font-family:var(--mono);font-size:11px;">'+(r._hora||'—').slice(0,5)+'</td>'+
-      '<td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;">'+r._lugar+'</td>'+
-      '<td><span class="badge '+(clsZ[r._zona]||'badge-nd')+'">'+r._zona+'</span></td>'+
-      '<td style="font-size:11px;">'+r._impacto+'</td>'+
-      '<td style="font-size:11px;">'+r._mV1+'</td>'+
-      '<td style="font-size:11px;">'+r._mV2+'</td>'+
-      '<td style="font-family:var(--mono);font-size:11px;text-align:center;color:'+(r._hosp?'var(--rojo)':'var(--neutro)')+'">'+
-        (r._hosp?'Sí':'No')+'</td>'+
-      '<td style="font-size:11px;color:var(--neutro);">'+r._insp+'</td>'+
-    '</tr>';
-  }).join('');
+function renderTabla(d) {
+  const clsZ = {'Urbana':'bu','Rural':'br','Sub urbana':'bsu'};
+  document.getElementById('tabla').innerHTML = [...d].reverse().slice(0,20).map(r =>
+    `<tr>
+      <td style="font-family:var(--mono);font-size:11px;white-space:nowrap;">${r._fecha}</td>
+      <td style="font-family:var(--mono);font-size:11px;">${(r._hora||'—').slice(0,5)}</td>
+      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;">${r._lugar}</td>
+      <td><span class="badge ${clsZ[r._zona]||'bnd'}">${r._zona}</span></td>
+      <td style="font-size:11px;">${r._impacto}</td>
+      <td style="font-size:11px;">${r._mV1} <span style="color:var(--neutro);font-size:10px;">${r._tV1!=='Sin dato'?'('+r._tV1+')':''}</span></td>
+      <td style="font-size:11px;">${r._mV2} <span style="color:var(--neutro);font-size:10px;">${r._tV2!=='Sin dato'?'('+r._tV2+')':''}</span></td>
+      <td style="font-family:var(--mono);font-size:11px;text-align:center;color:${r._hosp?'var(--rojo)':'var(--neutro)'};">${r._hosp?'Sí':'No'}</td>
+      <td style="font-size:11px;color:var(--neutro);">${r._insp}</td>
+    </tr>`
+  ).join('');
 }
 
-cargarDatos();
+cargar();
 </script>
 </body>
 </html>
